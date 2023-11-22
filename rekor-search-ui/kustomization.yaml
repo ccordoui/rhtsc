@@ -1,0 +1,10 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+resources:
+  - is-rekor-search-ui.yaml
+  - bc-rekor-search-ui.yaml
+  - build-rekor-search-ui.yaml
+  - cm-rekor-search-ui.yaml
+  - deployments-rekor-search-ui.yaml
+  - svc-rekor-search-ui.yaml
+  - route-rekor-search-ui.yaml

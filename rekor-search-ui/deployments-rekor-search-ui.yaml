@@ -1,0 +1,49 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: rekor-search-ui
+  namespace: rekor-system
+  annotations:
+    app.openshift.io/vcs-uri: https://github.com/sigstore/rekor-search-ui
+    image.openshift.io/triggers: '[{"from":{"kind":"ImageStreamTag","name":"rekor-search-ui:latest","namespace":"rekor-system"},"fieldPath":"spec.template.spec.containers[?(@.name==\"rekor-search-ui\")].image","pause":"false"}]'
+    openshift.io/generated-by: GitOPS
+  labels:
+    app: rekor-search-ui
+    app.kubernetes.io/component: rekor-search-ui
+    app.kubernetes.io/instance: rekor-search-ui
+    app.kubernetes.io/name: rekor-search-ui
+    app.kubernetes.io/part-of: rekor-search-ui-app
+    app.openshift.io/runtime: nodejs
+    app.openshift.io/runtime-version: 18-ubi9
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: rekor-search-ui
+  strategy:
+  template:
+    metadata:
+      labels:
+        app: rekor-search-ui
+        deployment: rekor-search-ui
+    spec:
+      containers:
+      - name: rekor-search-ui
+        command:
+        - next
+        image: image-registry.openshift-image-registry.svc:5000/rekor-system/rekor-search-ui@latest
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 8080
+          protocol: TCP
+        volumeMounts:
+        - name: rekor-search-ui
+          mountPath: /opt/app-root/src/.env
+          readOnly: true
+          subPath: .env
+      restartPolicy: Always
+      volumes:
+      - name: rekor-search-ui
+        configMap:
+          defaultMode: 420
+          name: rekor-search-ui

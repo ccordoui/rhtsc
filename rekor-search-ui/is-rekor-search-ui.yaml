@@ -1,0 +1,19 @@
+apiVersion: image.openshift.io/v1
+kind: ImageStream
+metadata:
+  name: rekor-search-ui
+  namespace: rekor-system
+  annotations:
+    app.openshift.io/vcs-uri: https://github.com/sigstore/rekor-search-ui
+    openshift.io/generated-by: GitOPS
+  labels:
+    app: rekor-search-ui
+    app.kubernetes.io/component: rekor-search-ui
+    app.kubernetes.io/instance: rekor-search-ui
+    app.kubernetes.io/name: rekor-search-ui
+    app.kubernetes.io/part-of: rekor-search-ui-app
+    app.openshift.io/runtime: nodejs
+    app.openshift.io/runtime-version: 18-ubi9
+spec:
+  lookupPolicy:
+    local: false

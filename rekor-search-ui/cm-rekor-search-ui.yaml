@@ -1,0 +1,7 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: rekor-search-ui
+  namespace: rekor-system
+data:
+  .env: NEXT_PUBLIC_REKOR_DEFAULT_DOMAIN="https://rekor.apps.example.com"

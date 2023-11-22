@@ -1,0 +1,37 @@
+apiVersion: build.openshift.io/v1
+kind: Build
+metadata:
+  name: rekor-search-ui-0
+  namespace: rekor-system
+  annotations:
+    openshift.io/build-config.name: rekor-search-ui
+    openshift.io/build.number: "0"
+    openshift.io/build.pod-name: rekor-search-ui-0-build
+  labels:
+    app: rekor-search-ui
+    app.kubernetes.io/component: rekor-search-ui
+    app.kubernetes.io/instance: rekor-search-ui
+    app.kubernetes.io/name: rekor-search-ui
+    app.kubernetes.io/part-of: rekor-search-ui-app
+    app.openshift.io/runtime: nodejs
+    app.openshift.io/runtime-version: 18-ubi9
+    buildconfig: rekor-search-ui
+    openshift.io/build-config.name: rekor-search-ui
+spec:
+  output:
+    to:
+      kind: ImageStreamTag
+      name: rekor-search-ui:latest
+    type: Git
+  source:
+    git:
+      uri: https://github.com/sigstore/rekor-search-ui
+    type: Git
+  strategy:
+    sourceStrategy:
+      from:
+        kind: DockerImage
+        name: registry.redhat.io/ubi9/nodejs-18:latest
+    type: Source
+  triggeredBy:
+  - message: GitOPS
